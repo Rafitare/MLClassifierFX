@@ -44,6 +44,7 @@ public class Perceptron implements Model<Double, Integer> {
                 bias += learningRate * error; // Update bias term
             }
         }
+        System.out.println("Training with Perceptron complete.");
     }
 
     @Override

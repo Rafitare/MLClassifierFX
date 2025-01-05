@@ -44,6 +44,7 @@ public class LogisticRegression implements Model<Double, Integer> {
                 bias += learningRate * error; // Update bias term
             }
         }
+        System.out.println("Training with Logistic Regression complete.");
     }
 
     @Override

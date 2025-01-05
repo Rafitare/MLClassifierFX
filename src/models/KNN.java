@@ -21,6 +21,7 @@ public class KNN implements Model <Double, Integer> {
     @Override
     public void train(List<Instance<Double, Integer>> instances) {
         this.trainingInstances = instances;
+        System.out.println("Training with KNN complete.");
     }
 
 
