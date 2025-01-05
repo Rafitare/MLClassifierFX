@@ -4,13 +4,15 @@
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" prefHeight="528.0" prefWidth="503.0" spacing="20" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<VBox alignment="CENTER" prefHeight="528.0" prefWidth="503.0" spacing="10.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
 
     <HBox alignment="CENTER" spacing="10">
         <Label text="Input File:" />
@@ -32,28 +34,33 @@
         <TextField fx:id="txtHyperParam1" prefHeight="26.0" prefWidth="230.0" promptText="e.g., K=3 for KNN/ epochs=300 for other" />
         <TextField fx:id="txtHyperParam2" promptText="e.g., learningRate=0.01" />
     </HBox>
-   <HBox prefHeight="100.0" prefWidth="200.0" spacing="30.0">
-      <children>
-         <Label text="            Scale features?">
-            <font>
-               <Font size="24.0" />
-            </font>
-         </Label>
-         <CheckBox fx:id="scaleFeaturesCheckBox" mnemonicParsing="false" prefHeight="36.0" prefWidth="74.0" text="Yes" />
-      </children>
-   </HBox>
+    <HBox prefHeight="100.0" prefWidth="200.0" spacing="30.0">
+        <children>
+            <Label text="            Scale features?">
+                <font>
+                    <Font size="24.0" />
+                </font>
+            </Label>
+            <CheckBox fx:id="scaleFeaturesCheckBox" mnemonicParsing="false" prefHeight="36.0" prefWidth="74.0" text="Yes" />
+        </children>
+    </HBox>
 
     <HBox alignment="CENTER" spacing="20">
         <Button onAction="#handleTrain" text="Train" />
     </HBox>
-     <Button onAction="#handleTest" text="Test" />
+    <Button onAction="#handleTest" text="Test" />
+     <Label style="-fx-font-size: 16px; -fx-text-fill: #333;" text="Results:">
+         <font>
+             <Font size="16.0" />
+         </font>
+     </Label>
 
-    <VBox alignment="CENTER" spacing="10">
-        <Label style="-fx-font-size: 16px; -fx-text-fill: #333;" text="Results:">
-            <font>
-                <Font size="16.0" />
-            </font>
-        </Label>
-        <TextArea fx:id="txtResults" editable="false" prefHeight="200.0" prefWidth="450.0" wrapText="true" />
-    </VBox>
+    <TableView fx:id="tableConfusionMatrix" prefHeight="170.0" prefWidth="503.0">
+        <columns>
+            <TableColumn fx:id="colActual" prefWidth="119.20001220703125" text="Actual / Predicted" />
+            <TableColumn fx:id="colPredicted0" prefWidth="108.79998779296875" text="Predicted 0" />
+            <TableColumn fx:id="colPredicted1" prefWidth="102.4000244140625" text="Predicted 1" />
+        </columns>
+    </TableView>
+     <TextArea fx:id="txtResults" editable="false" prefHeight="108.0" prefWidth="503.0" wrapText="true" />
 </VBox>

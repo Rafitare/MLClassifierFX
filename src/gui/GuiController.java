@@ -1,7 +1,11 @@
 package gui;
 
 import evaluation.Accuracy;
+import evaluation.ConfusionMatrix;
 import evaluation.Precision;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import modelDomain.Instance;
@@ -35,17 +39,23 @@ public class GuiController {
     private TextField txtTrainTestSplit;
 
     @FXML
-    void handleTest() {
-        txtResults.setText("Accuracy: " + modelAccuracy + "\nPrecision: " + modelPrecision);
-    }
+    private TableView<String[]> tableConfusionMatrix;
+
+    @FXML
+    private TableColumn<String[], String> colActual;
+
+    @FXML
+    private TableColumn<String[], String> colPredicted0;
+
+    @FXML
+    private TableColumn<String[], String> colPredicted1;
 
     double trainTestPercentage;
-    double modelAccuracy;
-    double modelPrecision;
+    ArrayList<Instance<Double, Integer>> testSet;
+    Model<Double, Integer> model;
 
     @FXML
     private CheckBox scaleFeaturesCheckBox;
-
 
     @FXML
     void handleTrain() {
@@ -60,27 +70,46 @@ public class GuiController {
         String hyperParam2 = txtHyperParam2.getText();
         String inputFilePath = txtInputFilePath.getText();
         List<Instance<Double, Integer>> instances = CSVReader.load("data/" + inputFilePath);
-        Model<Double, Integer> model = ModelFactory.getModel(classifierType, hyperParam1 + ',' + hyperParam2);
+        model = ModelFactory.getModel(classifierType, hyperParam1 + ',' + hyperParam2);
         if (scaleFeaturesCheckBox.isSelected()) {
             FeatureScaler.minMaxScale(instances);
         }
         ArrayList<Instance<Double, Integer>> trainSet = new ArrayList<>();
-        ArrayList<Instance<Double, Integer>> testSet = new ArrayList<>();
+        testSet = new ArrayList<>();
         TrainTestDataSplitter.splitData(instances, trainTestPercentage, trainSet, testSet);
         model.train(trainSet);
-        List<Integer> predictions = model.test(testSet);
-        Accuracy<Double, Integer> accuracyEvaluator = new Accuracy<>();
-        modelAccuracy = accuracyEvaluator.evaluate(testSet, predictions);
-        Precision<Double, Integer> precisionEvaluator = new Precision<>();
-        modelPrecision = precisionEvaluator.evaluate(testSet, predictions);
-
     }
 
+    @FXML
+    void handleTest() {
+        List<Integer> predictions = model.test(testSet);
+        ConfusionMatrix confusionMatrix = new ConfusionMatrix();
+        List<Integer> actual = new ArrayList<>();
+        for (Instance<Double, Integer> instance : testSet) {
+            actual.add(instance.getOutput());
+        }
+        confusionMatrix.update(actual, predictions);
+
+        ObservableList<String[]> data = FXCollections.observableArrayList(confusionMatrix.getMatrixAsList());
+        tableConfusionMatrix.setItems(data);
+
+        colActual.setCellValueFactory(x -> new SimpleStringProperty(x.getValue()[0]));
+        colPredicted0.setCellValueFactory(x -> new SimpleStringProperty(x.getValue()[1]));
+        colPredicted1.setCellValueFactory(x -> new SimpleStringProperty(x.getValue()[2]));
+
+        Accuracy<Double, Integer> accuracy = new Accuracy<>();
+
+        double acc = accuracy.evaluate(testSet, predictions);
+
+        Precision<Double, Integer> precision = new Precision<>();
+        double prec = precision.evaluate(testSet, predictions);
+
+        txtResults.setText("Accuracy: " + acc + "\nPrecision: " + prec) ;
+    }
 
     @FXML
     private void initialize() {
         comboBoxClassifier.getItems().addAll("KNN", "Perceptron", "Logistic Regression");
-
     }
 
     private void showAlert(String message) {
@@ -90,5 +119,4 @@ public class GuiController {
         alert.setContentText(message);
         alert.showAndWait();
     }
-
 }
