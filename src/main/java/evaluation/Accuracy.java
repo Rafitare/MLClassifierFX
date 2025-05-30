@@ -17,6 +17,7 @@ public class Accuracy<F, L> implements EvaluationMeasure<F, L> {
         }
 
         // Accuracy is the ratio of correct predictions to the total number of instances
+
         return (double) correct / instances.size();
     }
 }
