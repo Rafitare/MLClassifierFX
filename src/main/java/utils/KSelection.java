@@ -1,7 +1,7 @@
 package utils;
 
 import evaluation.Accuracy;
-import modelDomain.Instance;
+import domain.Instance;
 import models.KNN;
 
 import java.util.List;

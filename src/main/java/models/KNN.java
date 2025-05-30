@@ -1,7 +1,7 @@
 package models;
 
-import modelDomain.Instance;
-import modelDomain.Model;
+import domain.Instance;
+import domain.Model;
 
 import java.util.ArrayList;
 import java.util.Comparator;

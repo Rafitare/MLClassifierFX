@@ -1,12 +1,12 @@
 package utils;
 
-import modelDomain.Instance;
+import domain.Instance;
 
 import java.util.List;
 
 public class FeatureScaler {
     public static void minMaxScale(List<Instance<Double, Integer>> instances) {
-        int numFeatures = instances.getFirst().getInput().size();
+        int numFeatures = instances.get(0).getInput().size();
         double[] minValues = new double[numFeatures];
         double[] maxValues = new double[numFeatures];
 

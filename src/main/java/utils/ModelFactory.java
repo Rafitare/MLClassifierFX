@@ -1,6 +1,6 @@
 package utils;
 
-import modelDomain.Model;
+import domain.Model;
 
 public class ModelFactory {
     public static Model<Double, Integer> getModel(String modelName, String hyperparameters) {
@@ -24,6 +24,14 @@ public class ModelFactory {
                 int generations = Integer.parseInt(params[0]);
                 double learningRate = Double.parseDouble(params[1]);
                 model = new models.LogisticRegression(generations, learningRate);
+                break;
+            }
+            case "Decision Tree": {
+                model = new models.DecisionTree();
+                break;
+            }
+            case "Naive Bayes": {
+                model = new models.NaiveBayes();
                 break;
             }
             default: {

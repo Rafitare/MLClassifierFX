@@ -1,4 +1,4 @@
-package modelDomain;
+package domain;
 
 import java.util.List;
 

@@ -1,7 +1,7 @@
 package models;
 
-import modelDomain.Instance;
-import modelDomain.Model;
+import domain.Instance;
+import domain.Model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +24,7 @@ public class Perceptron implements Model<Double, Integer> {
     @Override
     public void train(List<Instance<Double, Integer>> instances) {
         // initialize weights
-        int nrOfFeatures = instances.getFirst().getInput().size();
+        int nrOfFeatures = instances.get(0).getInput().size();
         weights = new ArrayList<>(nrOfFeatures);
 
         for (int i = 0; i < nrOfFeatures; i++) {

@@ -1,6 +1,6 @@
 package evaluation;
 
-import modelDomain.Instance;
+import domain.Instance;
 
 import java.util.List;
 

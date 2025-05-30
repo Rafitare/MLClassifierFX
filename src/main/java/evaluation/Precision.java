@@ -1,6 +1,6 @@
 package evaluation;
 
-import modelDomain.Instance;
+import domain.Instance;
 
 import java.util.List;
 
@@ -31,6 +31,6 @@ public class Precision<F, L> implements EvaluationMeasure<F, L> {
             return 0.0;
         }
 
-        return (double) truePositives / denominator;
+        return (double) truePositives / (truePositives + falsePositives);
     }
 }

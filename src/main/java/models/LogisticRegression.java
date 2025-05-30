@@ -1,7 +1,7 @@
 package models;
 
-import modelDomain.Instance;
-import modelDomain.Model;
+import domain.Instance;
+import domain.Model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +22,7 @@ public class LogisticRegression implements Model<Double, Integer> {
     @Override
     public void train(List<Instance<Double, Integer>> instances) {
         // initialize weights
-        int numFeatures = instances.getFirst().getInput().size();
+        int numFeatures = instances.get(0).getInput().size();
         weights = new ArrayList<>(numFeatures);
 
         for (int i = 0; i < numFeatures; i++) {

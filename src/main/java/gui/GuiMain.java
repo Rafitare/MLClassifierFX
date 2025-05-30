@@ -1,5 +1,6 @@
 package gui;
 
+import controller.GuiController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -13,9 +14,7 @@ public class GuiMain extends Application {
     @Override
     public void start(Stage stage) {
         // hello world\
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("gui.fxml"));
-        GuiController controller = new GuiController();
-        loader.setController(controller);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/guifxml/gui.fxml"));
         try {
             Scene scene = new Scene(loader.load());
             stage.setScene(scene);
